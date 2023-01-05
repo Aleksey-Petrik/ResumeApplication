@@ -15,18 +15,37 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        storage[size] = r;
-        size++;
+        if (getIndex(r.uuid) >= 0) {
+            System.out.println("Resume is exist!");
+        } else {
+            storage[size] = r;
+            size++;
+        }
+    }
+
+    public void update(Resume r){
+        int index = getIndex(r.uuid);
+        if (index < 0) {
+            System.out.println("Resume is not exist!");
+        } else {
+            storage[index] = r;
+        }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        return index >= 0 ? storage[index] : null;
+        if (index < 0) {
+            System.out.println("Resume is not exist!");
+            return null;
+        }
+        return storage[index];
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index >= 0) {
+        if (index < 0) {
+            System.out.println("Resume is not exist!");
+        } else {
             System.arraycopy(storage, index + 1, storage, index, size - index);
             size--;
         }
