@@ -4,8 +4,9 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
+    private static final int SIZE_STORAGE = 10_000;
     private int size;
-    private final Resume[] storage = new Resume[10_000];
+    private final Resume[] storage = new Resume[SIZE_STORAGE];
 
     public void clear() {
         for (int i = 0; i < size; i++) {
@@ -16,14 +17,16 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         if (getIndex(r.uuid) >= 0) {
-            System.out.println("Resume is exist!");
+            System.out.println("Resume already exist!");
+        } else if (size == SIZE_STORAGE) {
+            System.out.println("Storage overflow!");
         } else {
             storage[size] = r;
             size++;
         }
     }
 
-    public void update(Resume r){
+    public void update(Resume r) {
         int index = getIndex(r.uuid);
         if (index < 0) {
             System.out.println("Resume is not exist!");
